@@ -1,11 +1,19 @@
-fastapi==0.115.6
-uvicorn[standard]==0.34.0
-websockets==14.1
-pydantic==2.10.4
-httpx==0.28.1
-python-dotenv==1.0.1
+# browser-use==0.13.10 pins several of its own dependencies to exact
+# versions (pydantic, python-dotenv, click, pillow, etc). Hard-pinning
+# those same packages here to different versions causes a
+# ResolutionImpossible conflict, so everything below is left
+# unpinned (or loosely pinned) EXCEPT the packages this project
+# actually needs a specific version of. pip resolves the rest from
+# browser-use's own requirements.
 browser-use==0.13.10
 google-genai==1.65.0
+
+fastapi>=0.115.6
+uvicorn[standard]>=0.34.0
+websockets>=14.1
+httpx>=0.28.1
+python-dotenv>=1.0.1
+
 pandas==2.2.3
 numpy==2.2.1
 openpyxl==3.1.5
