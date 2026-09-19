@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: agent-control-server
+    runtime: python
+    plan: standard
+    region: oregon
+    buildCommand: "pip install -r requirements.txt && playwright install --with-deps chromium"
+    startCommand: "uvicorn server:app --host 0.0.0.0 --port $PORT"
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: HEADLESS
+        value: "true"
+      - key: AGENT_MODEL
+        value: gemini-3.1-flash-lite
+      - key: AGENT_MAX_STEPS
+        value: "60"
+      - key: ALLOWED_ORIGINS
+        value: "*"
+      - key: AGENT_DATA_DIR
+        value: /opt/render/project/src/agent_data
+    healthCheckPath: /api/health
+    disk:
+      name: agent-data
+      mountPath: /opt/render/project/src/agent_data
+      sizeGB: 1
